@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
-
 import { FaGithubAlt, FaPlus } from 'react-icons/fa';
 
-import { Container, Form, SubmitButton } from './style';
+import api from '../../services/api';
+
+import { Container, Form, SubmitButton, List } from './style';
 
 export default class Main extends Component {
   state = {
     newRepo: '',
+    repositories: [],
   };
 
   handleInputChange = e => {
     this.setState({ newRepo: e.target.value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
 
-    console.log(this.state.newRepo);
+    const { newRepo, repositories } = this.state;
+
+    const response = await api.get(`/repos/${newRepo}`);
+
+    const data = {
+      name: response.data.full_name,
+    };
+
+    this.setState({
+      repositories: [...repositories, data],
+      newRepo: '',
+    });
   };
 
   render() {
@@ -41,6 +54,10 @@ export default class Main extends Component {
             <FaPlus color="#FFF" size={14} />
           </SubmitButton>
         </Form>
+
+        <List>
+
+        </List>
       </Container>
     );
   }

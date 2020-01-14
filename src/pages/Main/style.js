@@ -47,3 +47,7 @@ export const SubmitButton = styled.button.attrs({
   justify-content: center;
   align-items: center;
 `;
+
+export const List = styled.div`
+  background: #ccc;
+`;
